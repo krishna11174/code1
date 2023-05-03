@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="account_move_e_way_bill_new_field" model="ir.ui.view">
+            <field name="name">account.ewaybill.new.fields</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="trans_gstin_no" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="time_preparation" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="time_removal" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="documents_any" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+<!--                 <xpath expr="//field[@name = 'trans_name']" position="after">-->
+<!--                <field name="pay_terms" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>-->
+<!--                </xpath>-->
+                 <xpath expr="//field[@name = 'trans_name']" position="after">
+                <field name="llr_no" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+            </field>
+     </record>
+
+    <record id="stock_new_eway_bill_field" model="ir.ui.view">
+            <field name="name">stockpicking.new.ewaybills.fields</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="trans_gstin_no" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="time_preparation" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="time_removal" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+                 <xpath expr="//field[@name = 'transporter_docdt']" position="after">
+                <field name="documents_any" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+<!--                 <xpath expr="//field[@name = 'trans_name']" position="after">-->
+<!--                <field name="pay_terms" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>-->
+<!--                </xpath>-->
+                 <xpath expr="//field[@name = 'trans_name']" position="after">
+                <field name="llr_no" attrs="{'required': [('eway_bill_gen', '=', True)], 'invisible': [('eway_bill_gen', '!=', True)], 'readonly': [('eway_bill_status', '!=' , 'not generated')]}"/>
+                </xpath>
+            </field>
+     </record>
+</odoo>

@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="sale_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <t t-call="dc_report.sale_invoice_header"/>
+                        <table class="table table-bordered"
+                               style="table-layout: fixed; border-collapse: collapse; border: 1px solid black;">
+                            <tr style="">
+                                <th style="text-align: center;"
+                                    colspan="16">[Invoice
+                                    as per section 31 read with rule
+                                    46 of GST rule]
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="16" style="">
+                                    <div style="float: left; width: 50%">
+                                        <span>Invoice No :</span>
+                                        <t t-esc="o.payment_reference"/>
+                                        <br/>
+                                        <span>Cust's P.O No :</span>
+                                        <t t-esc="o.ref"/>
+                                    </div>
+                                    <div style="float: right; text-align: center; width: 50%">
+                                        <span>Dated :</span>
+                                        <t t-esc="o.invoice_date.strftime('%m/%d/%Y')"/>
+                                        <br/>
+                                        <span>Dated :</span>
+                                        <t t-esc="o.customer_ref_date"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr colsapn="16">
+                                <td colspan="16" style="">
+                                    <span>Challan/DC No :</span>
+                                    <span t-esc="o.delivery_no"/>
+                                </td>
+
+                            </tr>
+                            <tr colsapn="16" style="border: none;">
+                                <td colspan="5" style="border-right: none; height:160px;">
+                                    <div style="float:left width:50%">
+                                        <span>E-Way Bill No/Dt :</span>
+                                        <t t-esc="o.eway_bill_no"/>,
+                                        <t t-esc="o.eway_date"/>
+                                        <br/>
+                                        <span>Vehicle No. :</span>
+                                        <t t-esc="o.veh_no"/>
+                                        <br/>
+                                        <span>Transporter :</span>
+                                        <t t-esc="o.trans_id"/>
+                                        <br/>
+                                        <span>Transporter GSTIN No :</span>
+                                        <t t-esc="o.trans_gstin_no"/>
+                                        <br/>
+                                        <span>Payment Terms :</span>
+                                        <t t-esc="o.pay_terms"/>
+                                        <br/>
+                                        <span>Date/Time of Preparation :</span>
+                                        <t t-esc="o.time_preparation"/>
+                                        <br/>
+                                        <span>Date/Time of Removal of goods :</span>
+                                        <t t-esc="o.time_removal"/>
+                                    </div>
+                                </td>
+                                <td colspan="5" style="border-left: none; height:160px;">
+                                    <div>
+                                        <span>LR / RR No. :</span>
+                                        <t t-esc="o.llr_no"/>
+                                        <br/>
+                                        <span>Place of Supply :</span>
+                                        <t t-esc="o.l10n_in_state_id.name"/>
+                                    </div>
+
+                                </td>
+                                <td rowspan="2" colspan="6"
+                                    style="width:35%; height:50%; text-align:center;">
+                                    <div>
+                                        <span t-esc="qr_image" style="width:90%; height:60%;"/>
+
+<!--                                                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;'%('QR', o.display_qr_code)"-->
+<!--                                                                                     style="width:90%; height:60%;"/>-->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr colsapn="16">
+                                <td style="vertical-align:top;" colspan="10" height="30px">
+                                    <b>Ack No / Dt:112213146721216 / 20/05/2022 10:35:00AM</b>
+                                    <br/>
+                                    <b>IRN No
+                                        :2aa2ff79063851f1ea87df8c71a853e9d94378de2ae7650df26b304925d7733f
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr colsapn="16">
+                                <td colspan="8" height="20px">
+                                    <b>Transport Mode :</b>
+                                    <t t-if="o.transMode and o.transMode in dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])">
+                                        <t t-esc="dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])[o.transMode]"/>
+                                    </t>
+                                </td>
+                                <td colspan="8" height="20px">
+                                    <b>Distance :</b>
+                                    <t t-esc="o.distance"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="16" style="text-align:center;" height="26px">High Availability Single
+                                    Section
+                                    Digital
+                                    Axle Counter (HASSDAC) with Dual Track
+                                    Sensor Device used for Safety or Traffic Control
+                                    Equipment by Indian Railways
+                                </td>
+                            </tr>
+                            <tr colsapn="16">
+                                <td colspan="8" height="90px">
+                                    <span>Details of Consignee(SHIPPED to)</span>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px; ">GSTIN/UIN :
+                                    </span>
+                                    <t t-esc="o.consignee_name.vat"/>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px;">PAN No :</span>
+                                    <t t-esc="o.consignee_name.pan_no"/>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px;">State code / Name
+                                        :
+                                    </span>
+                                    <t t-esc="o.consignee_name.zip"/>
+                                    <t t-esc="o.consignee_name.state_id.name"/>
+                                </td>
+                                <td colspan="8" height="90px">
+                                    <span>A/C (Receipent)</span>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px;">GSTIN/UIN :
+                                    </span>
+                                    <t t-if="o.partner_id.vat" t-esc="o.partner_id.vat"/>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px;">PAN No :</span>
+                                    <t t-if="o.partner_id.pan_no" t-esc="o.partner_id.pan_no"/>
+                                    <br/>
+                                    <span style="padding-left: 10px; padding-right: 10px;">State code / Name
+                                        :
+                                    </span>
+                                    <t t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/>,
+                                    <t t-if="o.partner_id.state_id.name"
+                                       t-esc="o.partner_id.state_id.name"/>
+                                </td>
+                            </tr>
+                            <!--                                        <tr>-->
+                            <!--&lt;!&ndash;                                            <div style="width: 100%;">&ndash;&gt;-->
+                            <!--                                                <tbody style="text-align: center;height:200px; width:100%"-->
+                            <!--                                                       colspan="16">-->
+                            <!--                                        <tr style="border : 1px solid black;">-->
+                            <!--                                            <th colspan="1" style="">Sl No</th>-->
+                            <!--                                            <th colspan="2" style="">Part No.</th>-->
+                            <!--                                            <th colspan="4" style="">Description of Goods /-->
+                            <!--                                                Service-->
+                            <!--                                            </th>-->
+                            <!--                                            <th colspan="3" style="">HSN/SAC Code</th>-->
+                            <!--                                            <th colspan="2" style="">Qty Unit</th>-->
+                            <!--                                            <th colspan="2" style="">Rate(INR)</th>-->
+                            <!--                                            <th colspan="2" style="">Amount(INR)-->
+                            <!--                                            </th>-->
+                            <!--                                        </tr>-->
+                            <tbody style="display:table; width:871px; height:120px;">
+                                <tr style="border : 1px solid black; height:20px;">
+                                    <th style="width:54px;">Sl No</th>
+                                    <th style="width:109px;">Part No.</th>
+                                    <th style="width:218px;">Description of Goods /
+                                        Service
+                                    </th>
+                                    <th style="width:163px;">HSN/SAC Code</th>
+                                    <th style="width:109px;">Qty Unit</th>
+                                    <th style="width:109px;">Rate(INR)</th>
+                                    <th style="width:109px;">Amount(INR)
+                                    </th>
+                                </tr>
+                                <t t-set="i" t-value="1"/>
+                                <t t-foreach="o.invoice_line_ids[:2]" t-as="lines">
+                                    <tr style="border:none;">
+                                        <td
+                                                style="border-top:none; border-bottom:none; border-left: none; width:54px;">
+                                            <span t-esc="i"/>
+                                            <t t-set="i" t-value="i+1"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:109px;">
+                                            <t t-esc="lines.product_id.name"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:218px;">
+                                            <t t-esc="lines.name"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:163px;">
+                                            <t t-esc="lines.product_id.l10n_in_hsn_code"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:109px;">
+                                            <t t-esc="lines.quantity"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:109px;">
+                                            <t t-esc="lines.price_unit"/>
+                                        </td>
+                                        <td
+                                                style="border-top:none; border-bottom:none; width:109px;">
+                                            <t t-esc="lines.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tr>
+                                <td colspan="10" style="text-align:right;" height="20px">
+                                    <!--                                                <div style="float: left;" width="50%">-->
+                                    <group>
+                                        <group style="float: left; width:50%; text-align:left;">
+                                            <strong>Insurence No</strong>:
+                                            <t t-esc="o.insurance_no"/>
+                                        </group>
+                                        <!--                                                    <span>-->
+                                        <!--                                                        <t t-esc="o.insurance_no"/>-->
+                                        <!--                                                    </span>-->
+                                        <!--                                                </div>-->
+                                        <group>
+                                            <!--                                                <div style="float: right;">-->
+                                            Total
+                                        </group>
+                                        <!--                                                </div>-->
+                                    </group>
+                                </td>
+                                <td colspan="4" height="20px">
+                                    <t t-esc="o.done_qty"/>
+                                </td>
+                                <td colspan="2" style="" height="20px">
+                                    <t t-esc="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" height="25px">
+                                    <group>
+                                        <group style="float:left; text-align:left; width:50%;">
+                                            <strong>IC No. :</strong>
+                                            <t t-esc="o.ic_no"/>
+                                            <br/>
+                                            <strong>Serial No. :</strong>
+                                            <t t-esc="o.serial_no"/>
+                                        </group>
+                                        <group style="">
+                                            <strong>Date :</strong>
+                                            <t t-esc="o.ic_date"/>
+                                        </group>
+                                    </group>
+                                </td>
+                                <td colspan="4" height="25px">
+                                    <!--                                        <div style="vertical-align:top;">-->
+                                    <!--                                            <span>Freight</span>-->
+
+                                    <!--                                        </div>-->
+                                    <!--                                        <br/>-->
+
+                                    <group style="vertical-align: bottom;">
+                                        <b>Subtotal</b>
+                                    </group>
+                                </td>
+                                <td colspan="2" style="" height="25px">
+                                    <t t-esc="o.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" height="20px">Tax In Words :
+                                    <span>
+                                        <t t-esc="o.number_to_words_tax"/>
+                                    </span>
+                                </td>
+                                <td colspan="4" height="20px">
+                                    <span t-esc="o.tax"/>
+                                </td>
+                                <td colspan="2" style="" height="20px">
+                                    <t t-esc="o.amount_tax"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" height="20px">Invoice Amount in Words :
+                                    <span>
+                                        <t t-esc="o.number_to_words_amount_total"/>
+                                    </span>
+                                </td>
+                                <td colspan="4" height="20px">Grand Total</td>
+                                <td colspan="2" style="" height="20px">
+                                    <t t-esc="o.amount_total"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="16" style="" height="120px">
+                                    Declaration :
+                                    <div style="font-size: 10px; padding-left:30px;">
+                                        <p>
+                                            1.Certified that the particulars given above are true and
+                                            correct and
+                                            the amount indicated prepresents the value actually
+                                            charged and that there is no flow of additional consideration
+                                            directly
+                                            or indirectly from the service receiver
+                                        </p>
+                                        <p>2.Dispute, if any is subjected to Bangalore Jurisdiction Only.
+                                        </p>
+                                        <p>3.Whether tax is payable on Reverse charge : NO</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="16" height="21px">
+                                    <b>Delivery Terms :</b>
+                                    <span t-esc="o.invoice_incoterm_id.name"/>
+                                </td>
+                            </tr>
+                            <t t-set="remaining_products" t-value="o.invoice_line_ids[2:]"/>
+                            <t t-if="remaining_products">
+                                <!-- If there are remaining products, display them on the next page -->
+                                <div class="page-break"></div>
+
+                                <table style="display:table; width:872px; height:997px; border-collapse:collapse; border: 1px solid black;">
+                                    <tr style=" height: 20px;">
+                                        <th style="border: 1px solid black; width:54px;">Sl No</th>
+                                        <th style="border: 1px solid black; width:109px;">Part No.</th>
+                                        <th style="border: 1px solid black; width:218px;">Description of
+                                            Goods /
+                                            Service
+                                        </th>
+                                        <th style="border: 1px solid black; width:109px;">HSN/SAC Code</th>
+                                        <th style="border: 1px solid black; width:109px;">Qty Unit</th>
+                                        <th style="border: 1px solid black; width:109px;">Rate(INR)</th>
+                                        <th style="border: 1px solid black; width:110px;">Amount(INR)
+                                        </th>
+                                    </tr>
+                                    <t t-set="i" t-value="3"/>
+                                    <t t-foreach="o.invoice_line_ids[2:]" t-as="lines">
+                                        <tr style="border:none; text-align:center;">
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black; width:54px;">
+                                                <span t-esc="i"/>
+                                                <t t-set="i" t-value="i+1"/>
+                                            </td>
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black; width:109px;">
+                                                <t t-esc="lines.product_id.name"/>
+                                            </td>
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black;width:218px;">
+                                                <t t-esc="lines.name"/>
+                                            </td>
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black; width:163px;">
+                                                <t t-esc="lines.product_id.l10n_in_hsn_code"/>
+                                            </td>
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black; width:109px;">
+                                                <t t-esc="lines.quantity"/>
+                                            </td>
+                                            <td style="border-top:none; border-bottom:none; border-right:1px solid black;width:109px;">
+                                                <t t-esc="lines.price_unit"/>
+                                            </td>
+                                            <td
+                                                    style="width:110px; border-top:none; border-bottom:none;">
+                                                <t t-esc="lines.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </t>
+                        </table>
+                        <div class="footer">
+                            <t t-call="dc_report.footer"/>
+                            <!--                                <div style="font-size:8px;">-->
+                            <!--                                    <ul class="list-inline">-->
+                            <!--                                        Page:-->
+                            <!--                                        <span class="page"/>/-->
+                            <!--                                        <span class="topage"/>-->
+                            <!--                                    </ul>-->
+                            <!--                                </div>-->
+                        </div>
+                        <style>
+                            td{
+                            font-size:12px;
+                            }
+                            th{
+                            font-size:13px;}
+                        </style>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="sale_invoice_body_footer">
+            <table class="table table-bordered" style="border: 1px solid black;" width="100%">
+                <tr>
+                    <td colspan="10" style="text-align:right;">
+                        <div style="float: left;" width="50%">
+                            <b>Insurence No</b>
+                            <span>
+                                <t t-esc="o.insurance_no"/>
+                            </span>
+                        </div>
+                        <div style="float: right;">
+                            Total
+                        </div>
+                    </td>
+                    <td colspan="4">
+                        <t t-esc="o.done_qty"/>
+                    </td>
+                    <td colspan="2" style="">
+                        <t t-esc="o.amount_untaxed"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <div style="float:left;" width="50%">
+                            <b>IC No. :</b>
+                            <t t-esc="o.ic_no"/>
+                            <br/>
+                            <b>Serial No. :</b>
+                            <t t-esc="o.serial_no"/>
+                        </div>
+                        <div style="float:right;" width="50%">
+                            <b>Date :</b>
+                            <t t-esc="o.ic_date"/>
+                        </div>
+                    </td>
+                    <td colspan="4">
+                        <!--                                        <div style="vertical-align:top;">-->
+                        <!--                                            <span>Freight</span>-->
+
+                        <!--                                        </div>-->
+                        <!--                                        <br/>-->
+                        <div style="vertical-align: bottom;">
+                            <b>Subtotal</b>
+                        </div>
+                    </td>
+                    <td colspan="2" style="">
+                        <t t-esc="o.amount_untaxed"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">Tax In Words :
+                        <span>
+                            <t t-esc="o.number_to_words_tax"/>
+                        </span>
+                    </td>
+                    <td colspan="4">
+                        <span t-esc="o.tax"/>
+                    </td>
+                    <td colspan="2" style="">
+                        <t t-esc="o.amount_tax"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">Invoice Amount in Words :
+                        <span>
+                            <t t-esc="o.number_to_words_amount_total"/>
+                        </span>
+                    </td>
+                    <td colspan="4">Grand Total</td>
+                    <td colspan="2" style="">
+                        <t t-esc="o.amount_total"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="16" style="">
+                        Declaration :
+                        <div style="font-size: 10px; padding-left:30px;">
+                            <p>
+                                1.Certified that the particulars given above are true and correct and
+                                the amount indicated prepresents the value actually
+                                charged and that there is no flow of additional consideration directly
+                                or indirectly from the service receiver
+                            </p>
+                            <p>2.Dispute, if any is subjected to Bangalore Jurisdiction Only.</p>
+                            <p>3.Whether tax is payable on Reverse charge : NO</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="16">
+                        <b>Delivery Terms :</b>
+                        <span t-esc="o.invoice_incoterm_id.name"/>
+                    </td>
+                </tr>
+            </table>
+        </template>
+        <template id="product_table">
+            <table class="table table-bordered" width="100%" style="table-layout: fixed;" height="300px">
+                <!--                <thead>-->
+                <tr>
+                    <th colspan="1" style="">Sl No</th>
+                    <th colspan="2" style="">Part No.</th>
+                    <th colspan="4" style="">Description of Goods / Service</th>
+                    <th colspan="3" style="">HSN/SAC Code</th>
+                    <th colspan="2" style="">Qty Unit</th>
+                    <th colspan="2" style="">Rate(INR)</th>
+                    <th colspan="2" style="">Amount(INR)
+                    </th>
+                </tr>
+                <!--                </thead>-->
+                <tbody style="text-align: center; table-layout: fixed;" height="300px">
+                    <t t-set="i" t-value="1"/>
+                    <t t-foreach="o.invoice_line_ids" t-as="lines">
+                        <tr style="">
+                            <td colspan="1" style="">
+                                <span t-esc="i"/>
+                                <t t-set="i" t-value="i+1"/>
+                            </td>
+                            <td colspan="2" style="">
+                                <t t-esc="lines.product_id.name"/>
+                            </td>
+                            <td colspan="4" style="">
+                                <t t-esc="lines.name"/>
+                            </td>
+                            <td colspan="3" style="">
+                                <t t-esc="lines.product_id.l10n_in_hsn_code"/>
+                            </td>
+                            <td colspan="2" style="">
+                                <t t-esc="lines.quantity"/>
+                            </td>
+                            <td colspan="2" style="">
+                                <t t-esc="lines.price_unit"/>
+                            </td>
+                            <td colspan="2"
+                                style="">
+                                <t t-esc="lines.price_subtotal"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </template>
+        <template id="sale_invoice_body">
+            <table class="table table-bordered;">
+                <tr>
+                    <th style="text-align: center;"
+                        colspan="16">[Invoice
+                        as per section 31 read with rule
+                        46 of GST rule]
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="16" style="">
+                        <div style="float: left; width: 50%">
+                            <span>Invoice No :</span>
+                            <t t-esc="o.payment_reference"/>
+                            <br/>
+                            <span>Cust's P.O No :</span>
+                            <t t-esc="o.ref"/>
+                        </div>
+                        <div style="float: right; text-align: center; width: 50%">
+                            <span>Dated :</span>
+                            <t t-esc="o.invoice_date.strftime('%m/%d/%Y')"/>
+                            <br/>
+                            <span>Dated :</span>
+                            <t t-esc="o.customer_ref_date"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr colsapn="16">
+                    <td colspan="16" style="">
+                        <span>Challan/DC No :</span>
+                        <span t-esc="o.delivery_no"/>
+                    </td>
+
+                </tr>
+                <tr colsapn="16" style="">
+                    <td colspan="5" style="">
+                        <div style="float:left width:50%">
+                            <span>E-Way Bill No/Dt :</span>
+                            <t t-esc="o.eway_bill_no"/>,
+                            <t t-esc="o.eway_date"/>
+                            <br/>
+                            <span>Vehicle No. :</span>
+                            <t t-esc="o.veh_no"/>
+                            <br/>
+                            <span>Transporter :</span>
+                            <t t-esc="o.trans_id"/>
+                            <br/>
+                            <span>Transporter GSTIN No :</span>
+                            <t t-esc="o.trans_gstin_no"/>
+                            <br/>
+                            <span>Payment Terms :</span>
+                            <t t-esc="o.pay_terms"/>
+                            <br/>
+                            <span>Date/Time of Preparation :</span>
+                            <t t-esc="o.time_preparation"/>
+                            <br/>
+                            <span>Date/Time of Removal of goods :</span>
+                            <t t-esc="o.time_removal"/>
+                        </div>
+                    </td>
+                    <td colspan="5" style="">
+                        <div>
+                            <span>LR / RR No. :</span>
+                            <t t-esc="o.llr_no"/>
+                            <br/>
+                            <span>Place of Supply :</span>
+                            <t t-esc="o.l10n_in_state_id.name"/>
+                        </div>
+
+                    </td>
+                    <td rowspan="2" colspan="6"
+                        style="width:35%; height:50%; text-align:center;">
+                        <div>
+                            <span t-esc="qr_image" style="width:90%; height:60%;"/>
+
+                            <!--                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;'%('QR', o.display_qr_code)"-->
+                            <!--                                             style="width:90%; height:60%;"/>-->
+                        </div>
+                    </td>
+                </tr>
+                <tr colsapn="16">
+                    <td style="vertical-align:top;" colspan="10">
+                        <b>Ack No / Dt:112213146721216 / 20/05/2022 10:35:00AM</b>
+                        <br/>
+                        <b>IRN No
+                            :2aa2ff79063851f1ea87df8c71a853e9d94378de2ae7650df26b304925d7733f
+                        </b>
+                    </td>
+                </tr>
+                <tr colsapn="16">
+                    <td colspan="8">
+                        <b>Transport Mode :</b>
+                        <t t-if="o.transMode and o.transMode in dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])">
+                            <t t-esc="dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])[o.transMode]"/>
+                        </t>
+                    </td>
+                    <td colspan="8">
+                        <b>Distance :</b>
+                        <t t-esc="o.distance"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="16" style="text-align:center;">High Availability Single Section Digital
+                        Axle Counter (HASSDAC) with Dual Track
+                        Sensor Device used for Safety or Traffic Control
+                        Equipment by Indian Railways
+                    </td>
+                </tr>
+                <tr colsapn="16">
+                    <td colspan="8">
+                        <span>Details of Consignee(SHIPPED to)</span>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px; ">GSTIN/UIN :</span>
+                        <t t-esc="o.consignee_name.vat"/>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px;">PAN No :</span>
+                        <t t-esc="o.consignee_name.pan_no"/>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px;">State code / Name :
+                        </span>
+                        <t t-esc="o.consignee_name.zip"/>
+                        <t t-esc="o.consignee_name.state_id.name"/>
+                    </td>
+                    <td colspan="8">
+                        <span>A/C (Receipent)</span>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px;">GSTIN/UIN :</span>
+                        <t t-if="o.partner_id.vat" t-esc="o.partner_id.vat"/>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px;">PAN No :</span>
+                        <t t-if="o.partner_id.pan_no" t-esc="o.partner_id.pan_no"/>
+                        <br/>
+                        <span style="padding-left: 10px; padding-right: 10px;">State code / Name :
+                        </span>
+                        <t t-if="o.partner_id.zip" t-esc="o.partner_id.zip"/>,
+                        <t t-if="o.partner_id.state_id.name" t-esc="o.partner_id.state_id.name"/>
+                    </td>
+                </tr>
+            </table>
+
+        </template>
+    </data>
+</odoo>

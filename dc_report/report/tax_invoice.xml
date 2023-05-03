@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="tax_invoice">
+             <t t-set="m" t-value="0"/>
+        <t t-foreach="range(4)" t-as="k">
+            <t t-set="m" t-value="m+1"/>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="paper">
+                            <t t-call="dc_report.invoice_tax_header"/>
+                            <table class="table table-boreder"
+                                   style="border: 1px solid black; border-collapse: collapse;">
+                                <tr style="">
+                                    <th style="text-align: center;"
+                                        colspan="16">[Invoice
+                                        as per section 31 read with rule
+                                        46 of GST rule]
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" style="">
+                                        <group>
+                                            <group style="float: left; width: 80%">
+                                                <span>Invoice No :</span>
+                                                <b>
+                                                    <t t-esc="o.name"/>
+                                                </b>
+                                            </group>
+                                            <group>
+                                                <span>Dated :</span>
+                                                <t t-esc="o.invoice_date"/>
+                                            </group>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" style="">
+                                        <group>
+                                            <group style="float: left; width: 80%">
+                                                <span>Cust's P.O No :</span>
+                                                <t t-esc="o.customer_rek_num"/>
+                                            </group>
+                                            <group style="text-align:right;">
+                                                <span>Dated :</span>
+                                                <t t-esc="o.customer_rek_date"/>
+                                            </group>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" style="">
+                                        <group>
+                                            Payment Terms : <t t-esc="o.invoice_payment_term_id.name"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;" colspan="16">
+                                        <group>Maintenance and Repair
+                                            Service of other Machinery and Equipments
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="14" width="60%" height="90px" style="border-right:1px solid black;">
+                                        <group>
+                                            <group>
+                                                <b>Details of Consignee(SHIPPED to)</b>
+                                            </group>
+                                        </group>
+                                        <br/>
+                                        <group style="padding-left:5px;">
+                                            <group>
+                                                <b>
+                                                    <span t-esc="o.consignee_name.name"/>
+                                                </b>
+                                                <br/>
+                                                <group style="padding-left:10px;">
+                                                    <span t-esc="o.consignee_name.street"/>,<span
+                                                        t-esc="o.consignee_name.street2"/>,
+                                                    <span t-esc="o.consignee_name.city"/>
+                                                </group>
+                                            </group>
+                                            <br/>
+                                            <group style="float: left; width:50%; padding-left:5px;">
+                                                <span>GSTIN No :</span>
+                                                <span t-if="o.consignee_name.vat" t-esc="o.consignee_name.vat"/>
+                                                <br/>
+                                                <span>State code/Name/Place of Supply :</span>
+                                                <span t-esc="o.consignee_name.zip"/>,
+                                                <span t-esc="o.consignee_name.state_id.name"/>
+                                            </group>
+                                            <group>
+                                                <span>PAN No :</span>
+                                                <span t-esc="o.consignee_name.pan_no"/>
+                                            </group>
+                                        </group>
+                                    </td>
+                                    <td colspan="2" rowspan="2" width="40%" style="text-align:center;">
+                                        <img t-if="o.qr_image"
+                                             t-att-src="image_data_uri(o.qr_image)"
+                                             alt="QR Code"
+                                             style="height:55%; width:90%;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="14" style="vertical-align:top; border-right:1px solid black;">
+                                        <group>
+                                            <group>
+                                                <b>A/C (Receipent)</b>
+                                            </group>
+                                        </group>
+                                        <br/>
+                                        <group style="padding-left:5px;">
+                                            <group>
+                                                <b>
+                                                    <span t-esc="o.partner_id.name"/>
+                                                </b>
+                                                <br/>
+                                                <group style="padding-left:5px;">
+                                                <span t-esc="o.partner_id.street"/>,<span
+                                                    t-esc="o.partner_id.street2"/>,
+                                                <span t-esc="o.partner_id.city"/>
+                                                    </group>
+                                            </group>
+                                            <br/>
+                                            <group style="float: left; width:50%;padding-left:5px;">
+                                                <span>GSTIN No :</span>
+                                                <span t-if="o.partner_id.vat" t-esc="o.partner_id.vat"/>
+                                                <br/>
+                                                <span>State code/Name/Place of Supply :</span>
+                                                <span t-esc="o.partner_id.zip"/>,
+                                                <span t-esc="o.partner_id.state_id.name"/>
+                                            </group>
+                                            <group>
+                                                <span>PAN No :</span>
+                                                <span t-esc="o.partner_id.pan_no"/>
+                                            </group>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16">
+                                        <group style="font-weight:3px;">
+                                            <b>
+                                                <span>Ack No/Dt:
+                                                    <t t-esc="o.ack_no"/>
+                                                    <t t-esc="o.ackdt_no"/>
+                                                </span>
+                                            </b>
+                                        </group>
+                                        <br/>
+                                        <group>
+                                            <b>
+                                                <span>IRN No:
+                                                    <t t-esc="o.irn_no"/>
+                                                </span>
+                                            </b>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tbody colspan="16">
+                                    <tr>
+                                        <th colspan="1" width="8%" style="border-right:1px solid black;">Sl No</th>
+                                        <th colspan="2" width="8%" style="border-right:1px solid black;">Part No.</th>
+                                        <th colspan="6" width="40%" style="border-right:1px solid black;">Description of
+                                            Goods / Service
+                                        </th>
+                                        <th colspan="2" width="20%" style="border-right:1px solid black;">HSN/SAC Code
+                                        </th>
+                                        <th colspan="2" width="8%" style="border-right:1px solid black;">Qty Unit</th>
+                                        <th colspan="2" width="8%" style="border-right:1px solid black;">Rate(INR)</th>
+                                        <th colspan="1" width="8%" style="border-right:1px solid black;">Amount(INR)
+                                        </th>
+                                    </tr>
+                                    <t t-set="i" t-value="1"/>
+                                    <t t-foreach="o.invoice_line_ids[:3]" t-as="lines">
+                                        <tr style="border:none; text-align:center;" height="80px">
+                                            <td colspan="1"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <span t-esc="i"/>
+                                                <t t-set="i" t-value="i+1"/>
+                                            </td>
+                                            <td colspan="2"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.product_id.default_code"/>
+                                            </td>
+                                            <td colspan="6"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.product_id.name"/>
+                                            </td>
+                                            <td colspan="2"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.product_id.l10n_in_hsn_code"/>
+                                            </td>
+                                            <td colspan="2"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.quantity"/>
+                                            </td>
+                                            <td colspan="2"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.price_unit"/>
+                                            </td>
+                                            <td colspan="1"
+                                                style="border-top:none; border-bottom:none; border-right:1px solid black;">
+                                                <t t-esc="lines.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-set="remaining_rows" t-value="3 - len(o.invoice_line_ids[:3])"/>
+                                    <t t-foreach="range(remaining_rows)" t-as="i">
+                                        <tr style=" border: none;height:80px; font-size:12px;">
+                                            <td colspan="1"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="2"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="6"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="2"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="2"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="2"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                            <td colspan="1"
+                                                style="border-top:none;border-bottom:none;border-right:1px solid black;"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tr>
+                                    <td colspan="11" style="text-align:right; border-right:1px solid black;">
+                                        <group>
+                                            <b>Total</b>
+                                        </group>
+                                    </td>
+                                    <td colspan="4" style="border-right:1px solid black;">
+                                        <group>
+                                            <t t-esc="o.done_qty"/>
+                                        </group>
+                                    </td>
+                                    <td colspan="1">
+                                        <group>
+                                            <t t-esc="o.amount_untaxed"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" style="border-right:1px solid black;"></td>
+                                    <td colspan="4" style="border-right:1px solid black;">
+                                        <br/>
+                                        <group>
+                                            <b>
+                                                <span>Subtotal</span>
+                                            </b>
+                                        </group>
+                                    </td>
+                                    <td colspan="1">
+                                        <br/>
+                                        <group>
+                                            <b>
+                                                <span t-esc="o.amount_untaxed"/>
+                                            </b>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" height="27px" style="border-right:1px solid black;">
+                                        <group>
+                                            <span>Tax In Words :</span>
+                                            <span>
+                                                <t t-esc="o.number_to_words_tax"/>
+                                            </span>
+                                        </group>
+                                    </td>
+                                    <td colspan="4" style="border-right:1px solid black; font-size:7px;">
+                                        <group style="vertical-align:top;">
+                                                <span t-esc="o.tax"/>
+                                        </group>
+                                    </td>
+                                    <td colspan="1">
+                                        <group>
+                                            <span t-esc="o.amount_tax"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" height="27px" style="border-right:1px solid black;">
+                                        <group>
+                                            <span>Invoice Amount in Words :</span>
+                                            <span>
+                                                <span t-esc="o.number_to_words_amount_total"/>
+                                            </span>
+                                        </group>
+                                    </td>
+                                    <td colspan="4" style="border-right:1px solid black;">
+                                        <b>
+                                            <group>Grand Total</group>
+                                        </b>
+                                    </td>
+                                    <td colspan="1">
+                                        <group>
+                                            <b>
+                                                <span t-esc="o.amount_total"/>
+                                            </b>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" height="112px">
+                                        <group>
+                                           <b> Declaration : </b>
+                                            <group style="padding-left:10px;">
+                                                <br/>
+                                                1.Certified that the particulars given above are true and
+                                                correct and
+                                                the amount indicated prepresents the value actually
+                                                charged and that there is no flow of additional consideration
+                                                directly
+                                                or indirectly from the service receiver
+                                                <br/>
+                                                <br/>
+                                                2.Dispute, if any is subjected to Bangalore Jurisdiction Only.
+                                                <br/>
+                                                <br/>
+                                                3.Whether tax is payable on Reverse charge : NO
+                                            </group>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <t t-set="remaining_products" t-value="o.invoice_line_ids[3:]"/>
+                                <t t-if="remaining_products">
+                                    <div class="page-break"></div>
+                                    <!--                                <t t-foreach="o.invoice_line_ids[4:]" t-as="lines">-->
+                                    <table class="table table-bordered"
+                                           style="width:100%;border: 1px solid black; border-collapse:collapse;">
+                                        <thead>
+                                            <tr style="border:1px solid black; font-size:12px;">
+                                                <th width="5%" style="height:32px;">Sl No</th>
+                                                <th width="10%" style="height:32px;">Part No.</th>
+                                                <th width="50%" style="height:32px;">Description of
+                                                    Goods
+                                                    /
+                                                    Service
+                                                </th>
+                                                <th width="10%" style="height:32px;">HSN/SAC Code
+                                                </th>
+                                                <th width="5%" style="height:32px;">Qty Unit</th>
+                                                <th width="10%" style="height:32px;">Rate(INR)</th>
+                                                <th width="10%" style="height:32px;">Amount(INR)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="border-collapse:collapse;">
+                                            <t t-foreach="o.invoice_line_ids[3:]" t-as="lines">
+                                                <tr style=" border:none; height:86px; font-size:12px; text-align:center;">
+                                                    <td width="5%"
+                                                        style="border-top:none;border-bottom:none;">
+                                                        <span t-esc="i"/>
+                                                        <t t-set="i" t-value="i+1"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.product_id.default_code"/>
+                                                    </td>
+                                                    <td width="50%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.product_id.name"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.product_id.l10n_in_hsn_code"/>
+                                                    </td>
+                                                    <td width="5%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.quantity"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.price_unit"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none;border-bottom:none;">
+                                                        <t t-esc="lines.price_subtotal"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-set="remaining_rows" t-value="11 - len(o.invoice_line_ids[3:])"/>
+                                            <t t-foreach="range(remaining_rows)" t-as="i">
+                                                <tr style="border:none;height:86px;">
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                </tr>
+                                            </t>
+
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <div class="footer">
+                                    <t t-call="dc_report.footer"/>
+                                </div>
+                            </table>
+                            <style>
+                                td{
+                                font-size:12px;
+                                }
+                                th{
+                                font-size:13px;}
+                            </style>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+        </template>
+    </data>
+</odoo>

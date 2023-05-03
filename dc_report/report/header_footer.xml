@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--DC challana Header-->
+        <template id="tronics_header">
+            <div class="header">
+                <t t-if="m==1">
+                    <div class="label" style="text-align: right;">
+                    <span>Original</span>
+                    </div>
+                </t>
+                <t t-if="m==2">
+                    <div class="label_duplicate" style="text-align: right;">
+                    <span>Duplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==3">
+                    <div class="label_triplicate" style="text-align: right;">
+                    <span>Triplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==4">
+                    <div class="label_security" style="text-align: right;">
+                    <span>Security</span>
+                    </div>
+                </t>
+                <table class="table table-bordered" style="border-collapse:collapse; border: 1px solid black;"
+                       width="100%">
+                    <tr style="border:none" height="">
+                        <td width="20%" rowspan="2" style="border-right:none;">
+                            <!--                            <div>-->
+                            <img src="/web/binary/company_logo" style="height:115px;"/>
+                            <!--                            </div>-->
+                        </td>
+                        <td style="font-size:16; color: red; text-align: left; vertical-align: top; border-left:none; border-bottom:none;">
+                            <span t-if="o.company_id.name" t-esc="o.company_id.name"/>
+                        </td>
+                    </tr>
+                    <tr style="border:none;">
+                        <td style="font-size:10px; vertical-align:top; border-left:none; border-top:none;">
+                            <div style="font-weight:2px;">
+                                <span t-if="o.company_id.street" t-esc="o.company_id.street"/>
+                            </div>
+                            <div style="float:left; width:50%">
+                                <span>GSTIN/UIN :</span>
+                                <t t-if="o.company_id.vat" t-esc="o.company_id.vat"/>
+                                <br/>
+                                <span>State Name :</span>
+                                <t t-if="o.company_id.state_id.name" t-esc="o.company_id.state_id.name"/>
+                                <br/>
+                                <span>E-mail :</span>
+                                <t t-if="o.company_id.email" t-esc="o.company_id.email"/>
+                            </div>
+                            <div style="float: center;">
+                                <span>Phone No. :</span>
+                                <t t-if="o.company_id.phone" t-esc="o.company_id.phone"/>
+                                <br/>
+                                <span>Website :</span>
+                                <t t-if="o.company_id.website" t-esc="o.company_id.website"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+        <!-- END-->
+        <!--  TAX_INVOICE_HEADER-->
+        <template id="invoice_tax_header">
+            <div class="header">
+                <t t-if="m==1">
+                    <div class="label" style="text-align: right;">
+                    <span>Original</span>
+                    </div>
+                </t>
+                <t t-if="m==2">
+                    <div class="label_duplicate" style="text-align: right;">
+                    <span>Duplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==3">
+                    <div class="label_triplicate" style="text-align: right;">
+                    <span>Triplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==4">
+                    <div class="label_security" style="text-align: right;">
+                    <span>Testing</span>
+                    </div>
+                </t>
+                <table class="table table-bordered" style="border-collapse:collapse; border: 1px solid black;"
+                       width="100%">
+                    <tr width="100%" style="border:none;">
+                        <td style="border-right:none; border-bottom: none;"></td>
+                        <td style="text-align:center; border-left:none; border-bottom:none; padding-right:200px;">TAX
+                            INVOICE
+                        </td>
+                    </tr>
+                    <tr style="border:none" height="">
+                        <td width="20%" rowspan="2" style="border-right:none;border-top: none; text-align:center;">
+                            <img src="/web/binary/company_logo" style="height:82px; width:100%"/>
+                        </td>
+                        <!--                        <td style="font-size:16;text-align: left; vertical-align: top; border-left:none; border-bottom:none; border-top: none;margin-left:10px; color:red;">-->
+                        <!--&lt;!&ndash;                                                        <span t-if="o.company_id.name" t-esc="o.company_id.name"/>&ndash;&gt;-->
+                        <!--                        </td>-->
+                    </tr>
+                    <tr style="border:none;">
+
+                        <td style="vertical-align:top; border-left:none; border-top:none;">
+                            <div style="color: red; font-size:16px;">
+                                <span t-if="o.company_id.name" t-esc="o.company_id.name"/>
+                            </div>
+<!--                            <div style="font-weight:2px; font-size: 12px;">-->
+<!--                                <span t-if="o.company_id.street" t-esc="o.company_id.street"/>-->
+<!--                            </div>-->
+                            <group>
+                            <group style="float:left; width:50%; font-size: 12px;">
+                                <span t-if="o.company_id.street" t-esc="o.company_id.street"/>
+                                <br/>
+<!--                                <span>GSTIN/UIN :</span>-->
+<!--                                <t t-if="o.company_id.vat" t-esc="o.company_id.vat"/>-->
+<!--                                <br/>-->
+                                <span>State Name :</span>
+                                <t t-if="o.company_id.state_id.name" t-esc="o.company_id.state_id.name"/>
+                                <br/>
+                                <span>E-mail :</span>
+                                <t t-if="o.company_id.email" t-esc="o.company_id.email"/>
+                            </group>
+                            <group style="float: center; font-size: 12px;">
+                                <span>GSTIN/UIN :</span>
+                                <t t-if="o.company_id.vat" t-esc="o.company_id.vat"/>
+                                <br/>
+                                <span>Phone No. :</span>
+                                <t t-if="o.company_id.phone" t-esc="o.company_id.phone"/>
+                                <br/>
+                                <span>Website :</span>
+                                <t t-if="o.company_id.website" t-esc="o.company_id.website"/>
+                                <br/>
+                            </group>
+                            </group>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <style>
+                .tittle{
+                font-size:16;
+                }
+            </style>
+        </template>
+        <!-- END-->
+        <!--SALE INVOICE-->
+        <template id="sale_invoice_header">
+            <div class="header">
+                 <t t-if="m==1">
+                    <div class="label" style="text-align: right;">
+                    <span>Original</span>
+                    </div>
+                </t>
+                <t t-if="m==2">
+                    <div class="label_duplicate" style="text-align: right;">
+                    <span>Duplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==3">
+                    <div class="label_triplicate" style="text-align: right;">
+                    <span>Triplicate</span>
+                    </div>
+                </t>
+                <t t-if="m==4">
+                    <div class="label_security" style="text-align: right;">
+                    <span>Testing</span>
+                    </div>
+                </t>
+                <table class="table table-bordered" style="border-collapse:collapse; border: 1px solid black;"
+                       width="100%">
+                    <tr width="100%" style="border:none;">
+                        <td style="text-align:center; border-right:none;"></td>
+                        <td style="text-align:center;padding-right:200px; border-left:none;">TAX INVOICE</td>
+                    </tr>
+                    <tr style="border:none" height="">
+                        <td width="20%" rowspan="2" style="border-right:none; text-align:center;">
+                            <!--                            <div>-->
+                            <img src="/web/binary/company_logo" style="height:82px; width:100%"/>
+                            <!--                            </div>-->
+                        </td>
+                    </tr>
+                    <tr style="border:none;">
+
+                        <td style="vertical-align:top; border-left:none; border-top:none;">
+                            <div style="color: red; font-size:16px;">
+                                <span t-if="o.company_id.name" t-esc="o.company_id.name"/>
+                            </div>
+<!--                            <div style="font-weight:2px; font-size: 12px;">-->
+<!--                                <span t-if="o.company_id.street" t-esc="o.company_id.street"/>-->
+<!--                            </div>-->
+                            <group>
+                            <group style="float:left; width:50%; font-size: 12px;">
+                                <span t-if="o.company_id.street" t-esc="o.company_id.street"/>
+<!--                                <span>GSTIN/UIN :</span>-->
+<!--                                <t t-if="o.company_id.vat" t-esc="o.company_id.vat"/>-->
+                                <br/>
+                                <span>State Name :</span>
+                                <t t-if="o.company_id.state_id.name" t-esc="o.company_id.state_id.name"/>
+                                <br/>
+                                <span>E-mail :</span>
+                                <t t-if="o.company_id.email" t-esc="o.company_id.email"/>
+                            </group>
+                            <group style="float: center; font-size: 12px;">
+                                <span>GSTIN/UIN :</span>
+                                <t t-if="o.company_id.vat" t-esc="o.company_id.vat"/>
+                                <br/>
+                                <span>Phone No. :</span>
+                                <t t-if="o.company_id.phone" t-esc="o.company_id.phone"/>
+                                <br/>
+                                <span>Website :</span>
+                                <t t-if="o.company_id.website" t-esc="o.company_id.website"/>
+                                <br/>
+                            </group>
+                            </group>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <style>
+                .tittle{
+                font-size:16;
+                }
+            </style>
+        </template>
+        <!--END-->
+        <template id="footer_1">
+            <div class="footer">
+                <table class="table table-bordered">
+                    <tr style="border: none;">
+                        <th style="text-align: right; border-bottom:none;" colspan="10">For
+                            <span t-if="o.company_id.name" t-esc="o.company_id.name"/>
+                        </th>
+                    </tr>
+                    <tr style="border : none;">
+                        <td style="border-top:none; border-bottom:none;" colspan="10"></td>
+                    </tr>
+                    <tr style="border : none;">
+                        <td style="border-top:none; border-bottom:none;" colspan="10"></td>
+                    </tr>
+                    <tr style="border : none;">
+                        <td style="border-top: none; border-rigth: none; border-bottom: none;"
+                            colspan="2"></td>
+                        <td style="border-left: none; border-top: none; border-left: 2px solid white; text-align: center;">
+
+                        </td>
+                        <td style="border-left: 2px solid white; border-top: none; border-rigth: none; border-bottom: none;"
+                            colspan="2"></td>
+                        <td style="border-left: none; border-top: none; border-left: 2px solid white; text-align: center;">
+
+                        </td>
+                        <td style="border-left: none; border-top: none; border-left: 2px solid white; border-bottom: none;"
+                            colspan="2"></td>
+                        <td style="border-left: 2px solid white; border-top: none; text-align: center;">
+                        </td>
+                        <td style="border-left: 2px solid white; border-top: none; border-bottom: none;"
+                            colspan="2"></td>
+                    </tr>
+                    <tr style="border : none;">
+                        <td style="border-top: none; border-right: none;" colspan="2"></td>
+                        <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                            Prepared By
+                        </td>
+                        <td style="border-left: none; border-top: none; border-right: none;"
+                            colspan="2"></td>
+                        <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                            Checked By
+                        </td>
+                        <td style="border-left: none; border-top: none; border-right: none;"
+                            colspan="2"></td>
+                        <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                            Authorised Signatory
+                        </td>
+                        <td style="border-left: none; border-top: none;"
+                            colspan="2"></td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+        <!-- Service Invoice Footer        -->
+        <template id="footer">
+            <table class="table table-bordered" style="border-collapse: collapse; border : 1px solid black;">
+                <tr style="border: none;">
+                    <th style="text-align: right; border-bottom:none;" colspan="10">For
+                        <span t-if="o.company_id.name" t-esc="o.company_id.name"/>
+                    </th>
+                </tr>
+                <tr style="border : none;">
+                    <td style="border-top: none; border-rigth: none; border-bottom: none;"
+                        colspan="2"></td>
+                    <td style="border-left: none; border-top: none; border-left: 2px solid white; text-align: center;">
+                        <span t-esc="request.env.user.name"/>
+                    </td>
+                    <td style="border-left: 2px solid white; border-top: none; border-rigth: none; border-bottom: none;"
+                        colspan="2"></td>
+                    <td style="border-left: none; border-top: none; border-left: 2px solid white; text-align: center;">
+                        <span t-esc="request.env.user.name"/>
+                    </td>
+                    <td style="border-left: none; border-top: none; border-left: 2px solid white; border-bottom: none;"
+                        colspan="2"></td>
+                    <td style="border-left: 2px solid white; border-top: none; text-align: center;">
+                    </td>
+                    <td style="border-left: 2px solid white; border-top: none; border-bottom: none;"
+                        colspan="2"></td>
+                </tr>
+                <tr style="border : none;">
+                    <td style="border-top: none; border-right: none;" colspan="2"></td>
+                    <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                        Prepared By
+                    </td>
+                    <td style="border-left: none; border-top: none; border-right: none;"
+                        colspan="2"></td>
+                    <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                        Checked By
+                    </td>
+                    <td style="border-left: none; border-top: none; border-right: none;"
+                        colspan="2"></td>
+                    <td style="border-left: none; border-right: none; border-top: 2px solid black; text-align: center;">
+                        Authorised Signatory
+                    </td>
+                    <td style="border-left: none; border-top: none;"
+                        colspan="2"></td>
+                </tr>
+            </table>
+            <tr style="border : none;">
+                <td style="border-right: none;" colspan="10">
+                    <div>
+                        <div style="float :left; width:50%; font-size:10px;">
+                            E.'&amp; O.E.
+                        </div>
+                        <div style="float :right; width:50%">
+                            <div class="list-inline" style="text-align: right; font-size:10px;">
+                                Page:
+                                <span class="page"/>of
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <!--                    <td colspan="5" style="border-left: none;">-->
+                <!--&lt;!&ndash;                        <div class="list-inline" style="text-align: right;">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            Page:&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <span class="page"/>of&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <span class="topage"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--                    </td>-->
+            </tr>
+            <!--            <div style="font-size:8px;">-->
+            <!--                <ul class="list-inline">-->
+            <!--                    Page:-->
+            <!--                    <span class="page"/>/-->
+            <!--                    <span class="topage"/>-->
+            <!--                </ul>-->
+            <!--            </div>-->
+            <!--            <ul class="list-inline">-->
+            <!--                Page:-->
+            <!--                <span class="page"/>/-->
+            <!--                <span class="topage"/>-->
+            <!--            </ul>-->
+            <style>
+                td{
+                font-size:12px;
+                }
+                th{
+                font-size:13px;}
+            </style>
+        </template>
+    </data>
+</odoo>

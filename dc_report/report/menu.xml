@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="dc_challena_gg_tronics" model="ir.actions.report">
+            <field name="name">Delivery Challan</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dc_report.report</field>
+            <field name="report_file">report.report</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="serivice_invoice_gg_tronics" model="ir.actions.report">
+            <field name="name">Service Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dc_report.tax_invoice</field>
+            <field name="report_file">dc_report.tax_invoice</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="sale_invoice_gg_tronics" model="ir.actions.report">
+            <field name="name">Sale Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dc_report.krishna_report</field>
+            <field name="report_file">dc_report.krishna_report</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

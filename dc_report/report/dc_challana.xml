@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report">
+        <t t-set="m" t-value="0"/>
+        <t t-foreach="range(4)" t-as="k">
+            <t t-set="m" t-value="m+1"/>
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.html_container">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+                            <table class="table table-bordered" width="100%"
+                                   style="border-collapse: collapse; border: 1px solid black;">
+                                <tr style="">
+                                    <th colspan="16" style="text-align:center;">
+                                        <b>DELIVERY CHALLAN</b>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" style="height:94px;">
+                                        <group>
+                                            <span>Coustmer Name :</span>
+                                            <span t-esc="o.sale_id.partner_id.name"/>
+                                        </group>
+                                        <br/>
+                                        <group>
+                                            <span>Address :</span>
+                                            <t t-esc="o.sale_id.partner_id.street"/>
+                                            <t t-esc="o.sale_id.partner_id.street2"/>
+                                            <t t-esc="o.sale_id.partner_id.city"/>
+                                            <t t-esc="o.sale_id.partner_id.state_id.name"/>
+                                            <t t-esc="o.sale_id.partner_id.zip"/>
+                                        </group>
+                                        <br/>
+                                        <br/>
+                                        <group>
+                                            <group style="float: left; width:50%;">
+                                                <span>GSTIN :</span>
+                                                <t t-esc="o.sale_id.partner_id.vat"/>
+                                            </group>
+                                            <group style="">
+                                                <span>Place of Supply :</span>
+                                                <t t-if="o.sale_id.partner_id.state_id.name"
+                                                   t-esc="o.sale_id.partner_id.state_id.name"/>
+                                            </group>
+                                        </group>
+                                    </td>
+                                    <td colspan="3" style="text-align:right;">
+                                        <group>
+                                            <span>Dc No :</span>
+                                            <span t-esc="o.name"/>
+                                        </group>
+                                        <br/>
+                                        <group>
+                                            <span>Date :</span>
+                                            <t t-esc="o.scheduled_date"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16">
+                                        <group>
+                                            <b>Ship to</b>
+                                        </group>
+                                        <br/>
+                                        <br/>
+                                        <group>
+                                            <group>
+                                                <span>Consignee Name :</span>
+                                                <span t-esc="o.consignee_name.name"/>
+                                            </group>
+                                            <br/>
+                                            <br/>
+                                            <group>
+                                                <span>Address :</span>
+                                                <t t-esc="o.consignee_name.street"/>
+                                                <t t-esc="o.consignee_name.street2"/>
+                                                <t t-esc="o.consignee_name.city"/>
+                                                <t t-esc="o.consignee_name.state_id.name"/>
+                                                <t t-esc="o.consignee_name.zip"/>
+                                            </group>
+                                            <br/>
+                                            <group>
+                                                <group style="float:left; width:50%;">
+                                                    <span>GSTIN No :</span>
+                                                    <span t-esc="o.consignee_name.vat"/>
+                                                </group>
+                                                <group>
+                                                    <span>Place of Delivery :</span>
+                                                    <t t-esc="o.consignee_name.state_id.name"/>
+                                                </group>
+                                            </group>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" style="height:110px;">
+                                        <group>
+                                            <group style="float:left; width:40%">
+                                                <span>Customer PO No :</span>
+                                                <span t-esc="o.customer_ref_num"/>
+                                                <br/>
+                                                <br/>
+                                                <span>Mode of Transport :</span>
+                                                <span t-if="o.transMode and o.transMode in dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])">
+                                                    <span t-esc="dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])[o.transMode]"/>
+                                                </span>
+                                                <br/>
+                                                <br/>
+                                                <span>Vehicle No :</span>
+                                                <span t-esc="o.veh_no"/>
+                                            </group>
+                                            <group>
+                                                <span>PO Date :</span>
+                                                <span t-esc="o.customer_ref_date"/>
+                                                <br/>
+                                                <br/>
+                                                <span>Ship To :</span>
+                                                <t t-esc="o.consignee_name.street"/>
+                                                <t t-esc="o.consignee_name.street2"/>
+                                                <t t-esc="o.consignee_name.city"/>
+                                                <t t-esc="o.consignee_name.state_id.name"/>
+                                                <t t-esc="o.consignee_name.zip"/>
+                                                <br/>
+                                                <br/>
+                                                <span>LR\RR No :</span>
+                                                <span t-esc="o.transporter_docno"/>
+                                            </group>
+                                        </group>
+                                        <br/>
+                                        <group>
+                                            <span>Documents (if any) :</span>
+                                            <span t-esc="o.documents_any"/>
+                                        </group>
+                                    </td>
+                                </tr>
+                                <tbody>
+                                    <tr colspan="16">
+                                        <th colspan="1" style="height:28px;">Sl No</th>
+                                        <th colspan="11" style="height:28px;">Item Description</th>
+                                        <th colspan="2" style="height:28px;">Part No</th>
+                                        <th colspan="1" style="height:28px;">Unit</th>
+                                        <th colspan="1" style="height:28px;">Quantity</th>
+                                    </tr>
+                                </tbody>
+                                <tbody width="">
+                                    <t t-set="j" t-value="1"/>
+                                    <t t-foreach="o.move_ids_without_package[:7]" t-as="l">
+                                        <tr style=" border:none; height:77px; text-align:center;">
+                                            <td colspan="1" style="border-top:none; border-bottom:none;">
+                                                <t t-esc="j"/>
+                                                <t t-set="j" t-value="j+1"/>
+                                            </td>
+                                            <td colspan="11" style="border-top:none; border-bottom:none;">
+                                                <t t-esc="l.product_id.name"/>
+                                                <br/>
+                                                <b style="10px;">HSN No :</b>
+                                                <t t-esc="l.product_id.l10n_in_hsn_code"/>
+                                            </td>
+                                            <td colspan="2" style="border-top:none; border-bottom:none;">
+                                                <t t-esc="l.product_id.default_code"/>
+                                            </td>
+                                            <td colspan="1" style="border-top:none; border-bottom:none;">
+                                                <t t-esc="l.quantity_done"/>
+                                            </td>
+                                            <td colspan="1" style="border-top:none; border-bottom:none;">
+                                                <t t-esc="l.product_qty"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-set="remaining_rows" t-value="7 - len(o.move_ids_without_package[:7])"/>
+                                    <t t-foreach="range(remaining_rows)" t-as="i">
+                                        <tr style="border:none; height:77px; font-size:12px;">
+                                            <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                                            <td colspan="11" style="border-top:none; border-bottom:none"></td>
+                                            <td colspan="2" style="border-top:none; border-bottom:none"></td>
+                                            <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                                            <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tr>
+                                    <td colspan="14"></td>
+                                    <td colspan="1">Total</td>
+                                    <td>
+                                        <span t-esc="o.done_qty"/>
+                                    </td>
+
+                                </tr>
+
+                                <t t-set="remaining_products" t-value="o.move_ids_without_package[7:]"/>
+                                <t t-if="remaining_products">
+                                    <div class="page-break"></div>
+                                    <table class="table table-bordered"
+                                           style="width:100%;border: 1px solid black; border-collapse:collapse;">
+                                        <thead>
+                                            <tr style="border:1px solid black; font-size:12px;">
+                                                <th width="10%" style="height:32px;">Sl No</th>
+                                                <th width="60%" style="height:32px;">Item Description
+                                                </th>
+                                                <th width="10%" style="height:32px;">Part No.</th>
+                                                <th width="10%" style="height:32px;">HSN/SAC Code
+                                                </th>
+                                                <th width="10%" style="height:32px;">Qty Unit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="border-collapse:collapse;">
+                                            <t t-foreach="o.move_ids_without_package[7:]" t-as="lines">
+                                                <tr style=" border:none; height:86px; text-align:center;">
+                                                    <td width="10%" style="border-top:none; border-bottom:none;">
+                                                        <t t-esc="j"/>
+                                                        <t t-set="j" t-value="j+1"/>
+                                                    </td>
+                                                    <td width="60%" style="border-top:none; border-bottom:none;">
+                                                        <t t-esc="l.product_id.name"/>
+                                                        <br/>
+                                                        <b style="10px;">HSN No :</b>
+                                                        <t t-esc="l.product_id.l10n_in_hsn_code"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none; border-bottom:none;">
+                                                        <t t-esc="l.product_id.default_code"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none; border-bottom:none;">
+                                                        <t t-esc="l.quantity_done"/>
+                                                    </td>
+                                                    <td width="10%" style="border-top:none; border-bottom:none;">
+                                                        <t t-esc="l.product_qty"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-set="remaining_rows"
+                                               t-value="11 - len(o.move_ids_without_package[7:])"/>
+                                            <t t-foreach="range(remaining_rows)" t-as="i">
+                                                <tr style="border:none;height:86px;">
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                    <td style="border-top:none;border-bottom:none;"></td>
+                                                </tr>
+                                            </t>
+
+                                        </tbody>
+                                    </table>
+
+                                </t>
+                            </table>
+
+
+                            <!--                            <t t-set="m" t-value="m+1"/>-->
+                            <t t-call="dc_report.tronics_header"/>
+                            <!--                            <t t-call="dc_report.body"/>-->
+                            <div class="footer">
+                                <t t-call="dc_report.footer"/>
+                            </div>
+
+                        </div>
+                        <style>
+                            td{
+                            font-size:12px;
+                            }
+                            th{
+                            font-size:13px;}
+                        </style>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="body">
+        <table class="table table-bordered" width="100%"
+               style="border-collapse: collapse; border: 1px solid black;">
+            <tr style="">
+                <th colspan="16" style="text-align:center;">
+                    <b>DELIVERY CHALLAN</b>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="13" style="height:94px;">
+                    <group>
+                        <span>Coustmer Name :</span>
+                        <span t-esc="o.sale_id.partner_id.name"/>
+                    </group>
+                    <br/>
+                    <group>
+                        <span>Address :</span>
+                        <t t-esc="o.sale_id.partner_id.street"/>
+                        <t t-esc="o.sale_id.partner_id.street2"/>
+                        <t t-esc="o.sale_id.partner_id.city"/>
+                        <t t-esc="o.sale_id.partner_id.state_id.name"/>
+                        <t t-esc="o.sale_id.partner_id.zip"/>
+                    </group>
+                    <br/>
+                    <br/>
+                    <group>
+                        <group style="float: left; width:50%;">
+                            <span>GSTIN :</span>
+                            <t t-esc="o.sale_id.partner_id.vat"/>
+                        </group>
+                        <group style="">
+                            <span>Place of Supply :</span>
+                            <t t-if="o.sale_id.partner_id.state_id.name"
+                               t-esc="o.sale_id.partner_id.state_id.name"/>
+                        </group>
+                    </group>
+                </td>
+                <td colspan="3" style="text-align:right;">
+                    <group>
+                        <span>Dc No :</span>
+                        <span t-esc="o.name"/>
+                    </group>
+                    <br/>
+                    <group>
+                        <span>Date :</span>
+                        <t t-esc="o.scheduled_date"/>
+                    </group>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="16">
+                    <group>
+                        <b>Ship to</b>
+                    </group>
+                    <br/>
+                    <br/>
+                    <group>
+                        <group>
+                            <span>Consignee Name :</span>
+                            <span t-esc="o.consignee_name.name"/>
+                        </group>
+                        <br/>
+                        <br/>
+                        <group>
+                            <span>Address :</span>
+                            <t t-esc="o.consignee_name.street"/>
+                            <t t-esc="o.consignee_name.street2"/>
+                            <t t-esc="o.consignee_name.city"/>
+                            <t t-esc="o.consignee_name.state_id.name"/>
+                            <t t-esc="o.consignee_name.zip"/>
+                        </group>
+                        <br/>
+                        <group>
+                            <group style="float:left; width:50%;">
+                                <span>GSTIN No :</span>
+                                <span t-esc="o.consignee_name.vat"/>
+                            </group>
+                            <group>
+                                <span>Place of Delivery :</span>
+                                <t t-esc="o.consignee_name.state_id.name"/>
+                            </group>
+                        </group>
+                    </group>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="16" style="height:110px;">
+                    <group>
+                        <group style="float:left; width:40%">
+                            <span>Customer PO No :</span>
+                            <span t-esc="o.customer_ref_num"/>
+                            <br/>
+                            <br/>
+                            <span>Mode of Transport :</span>
+                            <span t-if="o.transMode and o.transMode in dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])">
+                                <span t-esc="dict(o.fields_get(allfields=['transMode'])['transMode']['selection'])[o.transMode]"/>
+                            </span>
+                            <br/>
+                            <br/>
+                            <span>Vehicle No :</span>
+                            <span t-esc="o.veh_no"/>
+                        </group>
+                        <group>
+                            <span>PO Date :</span>
+                            <span t-esc="o.customer_ref_date"/>
+                            <br/>
+                            <br/>
+                            <span>Ship To :</span>
+                            <t t-esc="o.consignee_name.street"/>
+                            <t t-esc="o.consignee_name.street2"/>
+                            <t t-esc="o.consignee_name.city"/>
+                            <t t-esc="o.consignee_name.state_id.name"/>
+                            <t t-esc="o.consignee_name.zip"/>
+                            <br/>
+                            <br/>
+                            <span>LR\RR No :</span>
+                            <span t-esc="o.transporter_docno"/>
+                        </group>
+                    </group>
+                    <br/>
+                    <group>
+                        <span>Documents (if any) :</span>
+                        <span t-esc="o.documents_any"/>
+                    </group>
+                </td>
+            </tr>
+            <tbody>
+                <tr colspan="16">
+                    <th colspan="1" style="height:28px;">Sl No</th>
+                    <th colspan="11" style="height:28px;">Item Description</th>
+                    <th colspan="2" style="height:28px;">Part No</th>
+                    <th colspan="1" style="height:28px;">Unit</th>
+                    <th colspan="1" style="height:28px;">Quantity</th>
+                </tr>
+            </tbody>
+            <tbody width="">
+                <t t-set="j" t-value="1"/>
+                <t t-foreach="o.move_ids_without_package[:7]" t-as="l">
+                    <tr style=" border:none; height:77px; text-align:center;">
+                        <td colspan="1" style="border-top:none; border-bottom:none;">
+                            <t t-esc="j"/>
+                            <t t-set="j" t-value="j+1"/>
+                        </td>
+                        <td colspan="11" style="border-top:none; border-bottom:none;">
+                            <t t-esc="l.product_id.name"/>
+                            <br/>
+                            <b style="10px;">HSN No :</b>
+                            <t t-esc="l.product_id.l10n_in_hsn_code"/>
+                        </td>
+                        <td colspan="2" style="border-top:none; border-bottom:none;">
+                            <t t-esc="l.product_id.default_code"/>
+                        </td>
+                        <td colspan="1" style="border-top:none; border-bottom:none;">
+                            <t t-esc="l.quantity_done"/>
+                        </td>
+                        <td colspan="1" style="border-top:none; border-bottom:none;">
+                            <t t-esc="l.product_qty"/>
+                        </td>
+                    </tr>
+                </t>
+                <t t-set="remaining_rows" t-value="7 - len(o.move_ids_without_package[:7])"/>
+                <t t-foreach="range(remaining_rows)" t-as="i">
+                    <tr style="border:none; height:77px; font-size:12px;">
+                        <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                        <td colspan="11" style="border-top:none; border-bottom:none"></td>
+                        <td colspan="2" style="border-top:none; border-bottom:none"></td>
+                        <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                        <td colspan="1" style="border-top:none; border-bottom:none"></td>
+                    </tr>
+                </t>
+            </tbody>
+            <tr>
+                <td colspan="14"></td>
+                <td colspan="1">Total</td>
+                <td>
+                    <span t-esc="o.done_qty"/>
+                </td>
+
+            </tr>
+
+            <t t-set="remaining_products" t-value="o.move_ids_without_package[7:]"/>
+            <t t-if="remaining_products">
+                <div class="page-break"></div>
+                <table class="table table-bordered"
+                       style="width:100%;border: 1px solid black; border-collapse:collapse;">
+                    <thead>
+                        <tr style="border:1px solid black; font-size:12px;">
+                            <th width="10%" style="height:32px;">Sl No</th>
+                            <th width="60%" style="height:32px;">Item Description
+                            </th>
+                            <th width="10%" style="height:32px;">Part No.</th>
+                            <th width="10%" style="height:32px;">HSN/SAC Code
+                            </th>
+                            <th width="10%" style="height:32px;">Qty Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border-collapse:collapse;">
+                        <t t-foreach="o.move_ids_without_package[7:]" t-as="lines">
+                            <tr style=" border:none; height:86px; text-align:center;">
+                                <td width="10%" style="border-top:none; border-bottom:none;">
+                                    <t t-esc="j"/>
+                                    <t t-set="j" t-value="j+1"/>
+                                </td>
+                                <td width="60%" style="border-top:none; border-bottom:none;">
+                                    <t t-esc="l.product_id.name"/>
+                                    <br/>
+                                    <b style="10px;">HSN No :</b>
+                                    <t t-esc="l.product_id.l10n_in_hsn_code"/>
+                                </td>
+                                <td width="10%" style="border-top:none; border-bottom:none;">
+                                    <t t-esc="l.product_id.default_code"/>
+                                </td>
+                                <td width="10%" style="border-top:none; border-bottom:none;">
+                                    <t t-esc="l.quantity_done"/>
+                                </td>
+                                <td width="10%" style="border-top:none; border-bottom:none;">
+                                    <t t-esc="l.product_qty"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-set="remaining_rows" t-value="11 - len(o.move_ids_without_package[7:])"/>
+                        <t t-foreach="range(remaining_rows)" t-as="i">
+                            <tr style="border:none;height:86px;">
+                                <td style="border-top:none;border-bottom:none;"></td>
+                                <td style="border-top:none;border-bottom:none;"></td>
+                                <td style="border-top:none;border-bottom:none;"></td>
+                                <td style="border-top:none;border-bottom:none;"></td>
+                                <td style="border-top:none;border-bottom:none;"></td>
+                            </tr>
+                        </t>
+
+                    </tbody>
+                </table>
+
+            </t>
+        </table>
+
+    </template>
+</odoo>
